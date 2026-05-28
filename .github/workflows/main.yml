@@ -1,0 +1,28 @@
+name: Node.js Secure Demo CI
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    # package-lock.json이 없으므로 안전하게 install 사용!
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run Tests
+      run: npm test
